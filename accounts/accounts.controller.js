@@ -90,13 +90,11 @@ function registerSchema(req, res, next) {
         acc_pnumber: Joi.string().required(),
         confirmPassword: Joi.string().valid(Joi.ref('acc_passwordHash')).required(),
         acc_acceptTerms: Joi.boolean().valid(true).required()
-        
     });
     validateRequest(req, next, schema);
 }
 
 function register(req, res, next) {
-    // Access file information from req.file
     const { acc_email, acc_passwordHash, acc_firstname, acc_lastname, acc_pnumber, acc_totalpoints, acc_role } = req.body;
     const acc_image = req.file ? req.file.path : null; // Default to null if no image uploaded
 
@@ -108,6 +106,7 @@ function register(req, res, next) {
         })
         .catch(next);
 }
+
 
 function verifyEmailSchema(req, res, next) {
     const schema = Joi.object({
